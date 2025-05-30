@@ -11,11 +11,11 @@
     "prefix": ""
   },
   "aliases": {
-    "components": "@meta/components",
-    "utils": "@meta/lib/utils",
-    "ui": "@meta/components/ui",
-    "lib": "@meta/lib",
-    "hooks": "@meta/hooks"
+    "components": "@meet/components",
+    "utils": "@meet/lib/utils",
+    "ui": "@meet/components/ui",
+    "lib": "@meet/lib",
+    "hooks": "@meet/hooks"
   },
   "iconLibrary": "lucide"
 }
