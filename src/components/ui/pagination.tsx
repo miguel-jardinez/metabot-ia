@@ -5,8 +5,8 @@ import {
   MoreHorizontalIcon
 } from "lucide-react";
 
-import { cn } from "@meet/lib/utils";
 import { Button, buttonVariants } from "@meet/components/ui/button";
+import { cn } from "@meet/lib/utils";
 
 function Pagination({ className, ...props }: React.ComponentProps<"nav">) {
   return (
@@ -119,9 +119,8 @@ function PaginationEllipsis({
 export {
   Pagination,
   PaginationContent,
-  PaginationLink,
+  PaginationEllipsis,
   PaginationItem,
-  PaginationPrevious,
+  PaginationLink,
   PaginationNext,
-  PaginationEllipsis
-};
+  PaginationPrevious };

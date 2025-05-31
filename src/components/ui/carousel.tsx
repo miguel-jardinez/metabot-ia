@@ -6,8 +6,8 @@ import useEmblaCarousel, {
 } from "embla-carousel-react";
 import { ArrowLeft, ArrowRight } from "lucide-react";
 
-import { cn } from "@meet/lib/utils";
 import { Button } from "@meet/components/ui/button";
+import { cn } from "@meet/lib/utils";
 
 type CarouselApi = UseEmblaCarouselType[1];
 type UseCarouselParameters = Parameters<typeof useEmblaCarousel>;
@@ -232,10 +232,9 @@ function CarouselNext({
 }
 
 export {
-  type CarouselApi,
   Carousel,
+  type CarouselApi,
   CarouselContent,
   CarouselItem,
-  CarouselPrevious,
-  CarouselNext
-};
+  CarouselNext,
+  CarouselPrevious };

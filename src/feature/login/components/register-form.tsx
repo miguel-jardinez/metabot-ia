@@ -2,14 +2,14 @@
 
 import { useCallback } from "react";
 import { useForm } from "react-hook-form";
-
 import { zodResolver } from "@hookform/resolvers/zod";
+
+import { Button } from "@meet/components/ui/button";
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@meet/components/ui/form";
 import { Input } from "@meet/components/ui/input";
-import { Button } from "@meet/components/ui/button";
+import { authClient } from "@meet/utils/auth-client";
 
 import { registerSchema, RegisterSchemaType } from "../schema/auth-schema";
-import { authClient } from "@meet/utils/auth-client";
 
 const RegisterForm = () => {
   const form = useForm<RegisterSchemaType>({

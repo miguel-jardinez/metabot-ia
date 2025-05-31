@@ -2,11 +2,9 @@
 
 import * as React from "react";
 import { Slot } from "@radix-ui/react-slot";
-import { VariantProps, cva } from "class-variance-authority";
+import { cva, VariantProps } from "class-variance-authority";
 import { PanelLeftIcon } from "lucide-react";
 
-import { useIsMobile } from "@meet/hooks/use-mobile";
-import { cn } from "@meet/lib/utils";
 import { Button } from "@meet/components/ui/button";
 import { Input } from "@meet/components/ui/input";
 import { Separator } from "@meet/components/ui/separator";
@@ -24,6 +22,8 @@ import {
   TooltipProvider,
   TooltipTrigger
 } from "@meet/components/ui/tooltip";
+import { useIsMobile } from "@meet/hooks/use-mobile";
+import { cn } from "@meet/lib/utils";
 
 const SIDEBAR_COOKIE_NAME = "sidebar_state";
 const SIDEBAR_COOKIE_MAX_AGE = 60 * 60 * 24 * 7;

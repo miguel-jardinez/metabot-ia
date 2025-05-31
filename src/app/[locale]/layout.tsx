@@ -1,10 +1,11 @@
+import "../globals.css";
+
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
-import { NextIntlClientProvider, hasLocale } from "next-intl";
 import { notFound } from "next/navigation";
-import { routing } from "@meet/i18n/routing";
+import { hasLocale, NextIntlClientProvider } from "next-intl";
 
-import "../globals.css";
+import { routing } from "@meet/i18n/routing";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
