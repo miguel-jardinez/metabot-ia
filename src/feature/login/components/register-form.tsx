@@ -1,4 +1,5 @@
 "use client";
+
 import { useCallback } from "react";
 import { useForm } from "react-hook-form";
 
@@ -8,11 +9,13 @@ import { Input } from "@meet/components/ui/input";
 import { Button } from "@meet/components/ui/button";
 
 import { registerSchema, RegisterSchemaType } from "../schema/auth-schema";
+import { authClient } from "@meet/utils/auth-client";
 
 const RegisterForm = () => {
   const form = useForm<RegisterSchemaType>({
     resolver: zodResolver(registerSchema),
     defaultValues: {
+      name: "",
       email: "",
       password: "",
       confirmPassword: ""
@@ -22,6 +25,19 @@ const RegisterForm = () => {
   const handleSubmit = useCallback(async(data: RegisterSchemaType) => {
     try {
       console.log("Form submitted with data:", data);
+
+      authClient.signUp.email({
+        email: data.email,
+        name: data.name,
+        password: data.password
+      }, {
+        onSuccess: (response) => {
+          console.log("Registration successful:", response);
+        },
+        onError: (error) => {
+          console.error("Registration failed:", error);
+        }
+      });
     } catch (error) {
       console.error("Error during registration:", error);
     }
@@ -29,7 +45,22 @@ const RegisterForm = () => {
   
   return (
     <Form  {...form}>
-      <form onSubmit={form.handleSubmit(handleSubmit)} className="space-y-2">
+      <form onSubmit={form.handleSubmit(handleSubmit)} className="space-y-4">
+
+        <FormField
+          control={form.control}
+          name="name"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Name</FormLabel>
+              <FormControl>
+                <Input {...field} placeholder="Name" />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+
         <FormField
           control={form.control}
           name="email"
