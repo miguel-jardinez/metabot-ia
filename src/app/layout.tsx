@@ -1,11 +1,7 @@
-import "../globals.css";
+import "./globals.css";
 
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
-import { notFound } from "next/navigation";
-import { hasLocale, NextIntlClientProvider } from "next-intl";
-
-import { routing } from "@meet/i18n/routing";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -23,26 +19,17 @@ export const metadata: Metadata = {
 };
 
 export default async function RootLayout({
-  children,
-  params
+  children
 }: Readonly<{
   children: React.ReactNode;
-  params: Promise<{ locale: string }>;
 }>) {
-  // Ensure that the incoming `locale` is valid
-  const { locale } = await params;
-  if (!hasLocale(routing.locales, locale)) {
-    notFound();
-  }
 
   return (
-    <html lang={locale}>
+    <html lang="en">
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
-        <NextIntlClientProvider>
-          {children}
-        </NextIntlClientProvider>
+        {children}
       </body>
     </html>
   );
