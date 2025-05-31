@@ -2,6 +2,7 @@
 
 import { useCallback, useState } from "react";
 import { useForm } from "react-hook-form";
+import { FaGithub, FaGoogle } from "react-icons/fa";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { OctagonAlertIcon } from "lucide-react";
 import Link from "next/link";
@@ -45,6 +46,26 @@ const SignUpForm = () => {
       onRequest: () => {
         setIsLoading(true);
         setError(null);
+      }
+    });
+  }, []);
+
+  const handleSignInWithSocial = useCallback((provider: "github" | "google") => {
+    authClient.signIn.social({
+      provider,
+      callbackURL: "/"
+    }, {
+      onSuccess: () => {
+        setError(null);
+        setIsLoading(false);
+      },
+      onError: ({ error }) => {
+        setError(error.message || "Social login failed. Please try again.");
+        setIsLoading(false);
+      },
+      onRequest: () => {
+        setError(null);
+        setIsLoading(true);
       }
     });
   }, []);
@@ -135,10 +156,12 @@ const SignUpForm = () => {
           </div>
 
           <div className="grid grid-cols-2 gap-4">
-            <Button variant="outline" type="button" className="w-full">
+            <Button disabled={isLoading} onClick={() => handleSignInWithSocial("google")} variant="outline" type="button" className="w-full">
+              <FaGoogle />
               Google
             </Button>
-            <Button variant="outline" type="button" className="w-full">
+            <Button disabled={isLoading} onClick={() => handleSignInWithSocial("github")} variant="outline" type="button" className="w-full">
+              <FaGithub />
               Github
             </Button>
           </div>

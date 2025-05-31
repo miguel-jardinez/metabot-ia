@@ -2,10 +2,10 @@
 
 import { useCallback, useState } from "react";
 import { useForm } from "react-hook-form";
+import { FaGithub, FaGoogle } from "react-icons/fa";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { OctagonAlertIcon } from "lucide-react";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
 
 import { Alert, AlertTitle } from "@meet/components/ui/alert";
 import { Button } from "@meet/components/ui/button";
@@ -16,7 +16,6 @@ import { authClient } from "@meet/utils/auth-client";
 import { loginSchema, LoginSchemaType } from "../schema/auth-schema";
 
 const SignInForm = () => {
-  const router = useRouter();
   const [error, setError] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState(false);
 
@@ -29,27 +28,43 @@ const SignInForm = () => {
   });
 
   const handleSubmit = useCallback((data: LoginSchemaType) => {
-    setError(null);
-    setIsLoading(true);
+    authClient.signIn.email({
+      email: data.email,
+      password: data.password,
+      callbackURL: "/"
+    }, {
+      onError: ({ error }) => {
+        setError(error.message || "Login failed. Please try again.");
+        setIsLoading(false);
+      },
+      onRequest: () => {
+        setError(null);
+        setIsLoading(true);
 
-    try {
-      authClient.signIn.email({
-        email: data.email,
-        password: data.password
-      }, {
-        onSuccess: () => {
-          router.push("/");
-        },
-        onError: ({ error }) => {
-          setError(error.message || "Login failed. Please try again.");
-          setIsLoading(false);
-        }
-      });
+      }
+    });
 
-    } catch {
-      setError("Login failed. Please check your credentials and try again.");
-    }
-  }, [router]);
+  }, []);
+
+  const handleSignInWithSocial = useCallback((provider: "github" | "google") => {
+    authClient.signIn.social({
+      provider,
+      callbackURL: "/"
+    }, {
+      onSuccess: () => {
+        setError(null);
+        setIsLoading(false);
+      },
+      onError: ({ error }) => {
+        setError(error.message || "Social login failed. Please try again.");
+        setIsLoading(false);
+      },
+      onRequest: () => {
+        setError(null);
+        setIsLoading(true);
+      }
+    });
+  }, []);
   
   return (
     <Form {...form}>
@@ -107,10 +122,12 @@ const SignInForm = () => {
           </div>
 
           <div className="grid grid-cols-2 gap-4">
-            <Button variant="outline" type="button" className="w-full">
+            <Button disabled={isLoading} onClick={() => handleSignInWithSocial("google")} variant="outline" type="button" className="w-full">
+              <FaGoogle />
               Google
             </Button>
-            <Button variant="outline" type="button" className="w-full">
+            <Button disabled={isLoading} onClick={() => handleSignInWithSocial("github")} variant="outline" type="button" className="w-full">
+              <FaGithub />
               Github
             </Button>
           </div>
