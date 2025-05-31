@@ -28,7 +28,8 @@ const eslintConfig = [
       "@stylistic/eol-last": ["error", "always"],
       "@stylistic/no-multiple-empty-lines": ["error", { "max": 1, "maxEOF": 0 }],
       "@stylistic/no-confusing-arrow": "error",
-      "arrow-body-style": ["error", "as-needed"]
+      "arrow-body-style": ["error", "as-needed"],
+      "object-curly-spacing": ["error", "always"]
     }
   }
 ];
