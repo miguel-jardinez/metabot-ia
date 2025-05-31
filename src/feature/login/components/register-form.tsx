@@ -102,7 +102,7 @@ const RegisterForm = () => {
             </FormItem>
           )}
         />
-        <Button type="submit">Login</Button>
+        <Button type="submit">Register</Button>
       </form>
     </Form>
   );
