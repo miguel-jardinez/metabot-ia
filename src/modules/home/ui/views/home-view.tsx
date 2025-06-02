@@ -8,14 +8,14 @@ const HomeView = () => {
 
   if (!session) {
     return (
-      <div className="flex flex-col items-center justify-center h-screen">
+      <div>
         You are not logged in
       </div>
     );
   }
 
   return (
-    <div className="flex flex-col items-center justify-center h-screen">
+    <div>
       <p>Logged in as {session?.user.name}</p>
       <Button onClick={() => authClient.signOut()} className="mt-4">
         Sign out
