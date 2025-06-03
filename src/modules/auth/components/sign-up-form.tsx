@@ -48,7 +48,7 @@ const SignUpForm = () => {
         setError(null);
       }
     });
-  }, []);
+  }, [router]);
 
   const handleSignInWithSocial = useCallback((provider: "github" | "google") => {
     authClient.signIn.social({
