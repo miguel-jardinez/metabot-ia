@@ -3,6 +3,7 @@ import "./globals.css";
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 
+import { Toaster } from "@meet/components/ui/sonner";
 import { TRPCReactProvider } from "@meet/trpc/client";
 
 const inter = Inter({
@@ -27,6 +28,7 @@ export default async function RootLayout({
         <body
           className={`${inter.className} antialiased`}
         >
+          <Toaster />
           {children}
         </body>
       </html>
