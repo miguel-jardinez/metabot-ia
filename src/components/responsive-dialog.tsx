@@ -3,13 +3,16 @@ import { useIsMobile } from "@meet/hooks/use-mobile";
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from "./ui/dialog";
 import { Drawer, DrawerContent, DrawerDescription, DrawerHeader, DrawerTitle } from "./ui/drawer";
 
+export type ResponsiveDialogControls = {
+  open: boolean;
+  onOpenChange: (open: boolean) => void;
+};
+
 type ResponsiveDialogProps = {
   title: string;
   description: string;
-  open: boolean;
-  onOpenChange: (open: boolean) => void;
   children: React.ReactNode;
-};
+} & ResponsiveDialogControls;
 
 const ResponsiveDialog = ({
   title,
