@@ -1,4 +1,4 @@
-import { eq } from "drizzle-orm";
+import { eq, getTableColumns, sql } from "drizzle-orm";
 
 import { db } from "@meet/db";
 import { agents } from "@meet/db/schema";
@@ -19,7 +19,10 @@ export const agentsRouter = createTRPCRouter({
       throw new Error("Agent ID is required");
     }
 
-    const [data] = await db.select()
+    const [data] = await db.select({
+      ...getTableColumns(agents),
+      meetingCount: sql`5`
+    })
       .from(agents)
       .where(eq(agents.id, input.id));
 
