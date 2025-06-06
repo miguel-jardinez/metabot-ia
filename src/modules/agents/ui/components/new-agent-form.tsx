@@ -12,12 +12,12 @@ import { Textarea } from "@meet/components/ui/textarea";
 import { useTRPC } from "@meet/trpc/client";
 
 import { createAgent, CreateAgentSchema } from "../../schemas";
-import { AgetGetOne } from "../../types";
+import { AgentGetOne } from "../../types";
 
 type NewAgentFormProps = {
   onSuccess?: () => void;
   onCancel?: () => void;
-  initialData?: AgetGetOne;
+  initialData?: AgentGetOne;
 };
 
 const NewAgentForm = ({ onSuccess, onCancel, initialData } : NewAgentFormProps) => {
