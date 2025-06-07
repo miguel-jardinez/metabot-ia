@@ -1,14 +1,27 @@
 "use client";
 
-import { useState } from "react";
-import { PlusIcon } from "lucide-react";
+import { useCallback, useState } from "react";
+import { PlusIcon, XCircleIcon } from "lucide-react";
 
 import { Button } from "@meet/components/ui/button";
+import { DEFAULT_PAGE_NUMBER } from "@meet/constants";
 
+import useAgentFilters from "../../hooks/use-agents-filter";
+import AgentSearchFilters from "./agents-search-filter";
 import NewAgentDialog from "./new-agent-dialog";
 
 const ListAgentHeader = () => {
+  const [filters, setFilters] = useAgentFilters();
   const [isOpen, setIsOpen] = useState(false);
+
+  const isAnyFilterModified = !!filters.search;
+
+  const onClearFilters = useCallback(() => {
+    setFilters({
+      page: DEFAULT_PAGE_NUMBER,
+      search: ""
+    });
+  }, [setFilters]);
 
   return (
     <>
@@ -20,6 +33,15 @@ const ListAgentHeader = () => {
             <PlusIcon className="size-4" />
             New Agent
           </Button>
+        </div>
+        <div className="flex items-center gap-x-2 p-1">
+          <AgentSearchFilters />
+          { isAnyFilterModified && (
+            <Button variant="outline" size="sm" onClick={onClearFilters}>
+              <XCircleIcon />
+              Clear
+            </Button>
+          )}
         </div>
       </div>
     </>
