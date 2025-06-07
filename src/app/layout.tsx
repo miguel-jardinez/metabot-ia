@@ -2,6 +2,7 @@ import "./globals.css";
 
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
+import { NuqsAdapter } from "nuqs/adapters/next/app";
 
 import { Toaster } from "@meet/components/ui/sonner";
 import { TRPCReactProvider } from "@meet/trpc/client";
@@ -23,15 +24,17 @@ export default async function RootLayout({
 }>) {
 
   return (
-    <TRPCReactProvider>
-      <html lang="en">
-        <body
-          className={`${inter.className} antialiased`}
-        >
-          <Toaster />
-          {children}
-        </body>
-      </html>
-    </TRPCReactProvider>
+    <NuqsAdapter>
+      <TRPCReactProvider>
+        <html lang="en">
+          <body
+            className={`${inter.className} antialiased`}
+          >
+            <Toaster />
+            {children}
+          </body>
+        </html>
+      </TRPCReactProvider>
+    </NuqsAdapter>
   );
 }
