@@ -36,6 +36,17 @@ const NewAgentForm = ({ onSuccess, onCancel, initialData } : NewAgentFormProps) 
     onSuccess: async () => {
       await queryClient.invalidateQueries(trpc.agents.getMany.queryOptions({}));
 
+      onSuccess?.();
+    },
+    onError: (error) => {
+      toast.error(error.message);
+    }
+  }));
+
+  const onUpdateAgent = useMutation(trpc.agents.update.mutationOptions({
+    onSuccess: async () => {
+      await queryClient.invalidateQueries(trpc.agents.getMany.queryOptions({}));
+
       if (initialData?.id) {
         await queryClient.invalidateQueries(trpc.agents.getOne.queryOptions({ id: initialData.id }));
       }
@@ -47,18 +58,16 @@ const NewAgentForm = ({ onSuccess, onCancel, initialData } : NewAgentFormProps) 
     }
   }));
 
-  const onUpdateAgent = useCallback(async (data: CreateAgentSchema) => {}, []);
-
   const isEdit = Boolean(initialData?.id);
-  const isPending = onCreateAgent.isPending;
+  const isPending = onCreateAgent.isPending || onUpdateAgent.isPending;
 
   const onSubmit = useCallback(async (data: CreateAgentSchema) => {
-    if (isEdit) {
-      await onUpdateAgent(data);
+    if (isEdit && initialData) {
+      onUpdateAgent.mutate({ ...data, id: initialData.id });
     } else {
       onCreateAgent.mutate(data);
     }
-  }, [isEdit, onCreateAgent, onUpdateAgent]);
+  }, [initialData, isEdit, onCreateAgent, onUpdateAgent]);
 
   return (
     <Form {...form}>
