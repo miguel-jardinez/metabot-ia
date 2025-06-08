@@ -62,10 +62,32 @@ export const meetingsRouter = createTRPCRouter({
 
     return existingMeeting;
   }),
-  create: protectedProcedure.input(createMeetingSchema).mutation(async () => {
+  create: protectedProcedure.input(createMeetingSchema).mutation(async ({ input, ctx }) => {
+    const [existingMeeting] = await db
+      .insert(meetings)
+      .values({ ...input, userId: ctx.auth.user.id })
+      .returning();
+  
+    return existingMeeting;
   }),
   delete: protectedProcedure.input(meetingIdSchema).mutation(async ({ ctx, input }) => {
   }),
   update: protectedProcedure.input(updateMeetingSchema).mutation(async ({ ctx, input }) => {
+    const userId = ctx.auth.session.userId;
+    const agentId = input.id;
+    
+    const [updatedMeeting] = await db
+      .update(meetings)
+      .set(input)
+      .where(and(
+        eq(meetings.id, agentId),
+        eq(meetings.userId, userId)
+      )).returning();
+    
+    if (!updatedMeeting) {
+      throw new TRPCError({ code: "NOT_FOUND", message: "No agent found" });
+    }
+    
+    return updatedMeeting;
   })
 });
