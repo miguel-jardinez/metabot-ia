@@ -8,7 +8,7 @@ export const meetingIdSchema = z.object({
 
 export const createMeetingSchema = z.object({
   name: z.string().min(1, "Name is required"),
-  instructions: z.string().min(1, "Instructions is required")
+  agentId: z.string().min(1, { message: "Agent is required" })
 });
 
 export const meetingFilterSchema = z.object({ 
