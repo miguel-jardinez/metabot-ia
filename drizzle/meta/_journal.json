@@ -22,6 +22,27 @@
       "when": 1748992760859,
       "tag": "0002_agent_table_created",
       "breakpoints": true
+    },
+    {
+      "idx": 3,
+      "version": "7",
+      "when": 1749344769423,
+      "tag": "0003_meetings_table_created",
+      "breakpoints": true
+    },
+    {
+      "idx": 4,
+      "version": "7",
+      "when": 1749344823861,
+      "tag": "0004_fix_meeting_enum",
+      "breakpoints": true
+    },
+    {
+      "idx": 5,
+      "version": "7",
+      "when": 1749344990395,
+      "tag": "0005_create_enum_for_meeting_table",
+      "breakpoints": true
     }
   ]
 }
