@@ -2,6 +2,8 @@
 import { Suspense } from "react";
 import { ErrorBoundary } from "react-error-boundary";
 import { dehydrate, HydrationBoundary } from "@tanstack/react-query";
+import { headers } from "next/headers";
+import { redirect } from "next/navigation";
 import { SearchParams } from "nuqs";
 
 import ErrorState from "@meet/components/error-state";
@@ -10,12 +12,21 @@ import { loadSearchParams } from "@meet/modules/agents/params";
 import ListAgentHeader from "@meet/modules/agents/ui/components/list-agent-header";
 import AgentsView from "@meet/modules/agents/ui/views/agents-view";
 import { getQueryClient, trpc } from "@meet/trpc/server";
+import { auth } from "@meet/utils/auth";
 
 interface PageProps {
   searchParams: Promise<SearchParams>
 }
 
 const Page = async ({ searchParams } : PageProps) => {
+  const session = await auth.api.getSession({
+    headers: await headers()
+  });
+
+  if (!session) {
+    redirect("/sign-in");
+  }
+
   const filters = await loadSearchParams(searchParams);
   const queryClient = getQueryClient();
   void queryClient.prefetchQuery(trpc.agents.getMany.queryOptions({
