@@ -3,13 +3,13 @@
 import { useSuspenseQuery } from "@tanstack/react-query";
 import { useRouter } from "next/navigation";
 
+import { DataTable } from "@meet/components/data-table";
 import EmptyState from "@meet/components/empty-state";
 import { useTRPC } from "@meet/trpc/client";
 
 import useAgentFilters from "../../hooks/use-agents-filter";
 import { columns } from "../components/columns";
 import DataPagination from "../components/data-pagination";
-import { DataTable } from "../components/data-table";
 
 const AgentsView = () => {
   const router = useRouter();
